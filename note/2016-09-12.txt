@@ -1,0 +1,114 @@
+链接：http://pan.baidu.com/s/1skNuqrb 密码：mv82
+2016-9-12
+1、Listview
+	1）作为一个控件，需要将它写入布局文件（activity_main.xml）
+	<?xml version="1.0" encoding="utf-8"?>
+	<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.administrator.my12306_03.MainActivity">
+
+	    <ListView
+	        android:id="@+id/listview"
+	        android:layout_height="wrap_content"
+	        android:layout_width="match_parent"
+	        />
+	</RelativeLayout>
+	
+	2）在activity中找到控件，然后使用
+	private ListView listView = null;
+	listView = (ListView)findViewById(R.id.listview);
+	
+	3）创建适配器
+	适配器：将一个接口转变成另外一个接口
+	android适配器：将数据data和视图view匹配
+	listview提供了4中适配器：
+		31）ArrayAdapter  只能显示文本
+			//android.R.layout.simple_list_item_1是android提供的一个简单布局，只能显示文本
+			new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1 , new String[]{"lianxiren", "zhanghu", "mima"});
+		32）SimpleAdapter 			适合数据类型为HashMap
+		33）SimpleCursorAdapter  	适合数据库
+		34）BaseAdapter				最基础的，可以适用任何listview
+		适配器的2个要素：item的布局，item的数据	
+	4）使用适配器
+	listView.setAdapter(adapter);	
+	
+	
+2、BaseAdapter
+	为listview提供了一个最基础的适配器，可以自由的定制listview的界面
+	1）创建一个类，继承自BaseAdapter
+	2）重写其中的4个方法
+	//item的个数
+    @Override
+    public int getCount() { return 2;	}
+    @Override
+    public Object getItem(int position)	{ return null; }
+    @Override
+    public long getItemId(int position)	{return 0;}
+    //显示
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
+        //加载布局，此方法可以为所有自定义控件加载布局
+        //得到一个LayoutInflater实例，参数为Context，从构造函数获取
+        LayoutInflater inflater = LayoutInflater.from(con);
+        //加载布局，返回一个view。第一个参数是布局id，可以从构造函数获取
+        View view = inflater.inflate(resId, null);
+        //加载数据
+        //从view中找到控件
+        TextView textView = (TextView)view.findViewById(R.id.textview);
+        ImageView imageView = (ImageView)view.findViewById(R.id.image);
+        //调用控件 .set  所有的数据都可以从构造函数来获取
+        textView.setText(name[position]);
+        imageView.setImageResource(imgID[position]);
+        //将view返回给系统
+        return view;
+    }
+    3）剩下的用法和ArrayAdapter一样
+	
+	
+3、listview的点击操作
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Log.v("hehe", String.valueOf(position));
+                Intent intent = new Intent();
+                if(position==0)
+                    intent.setClass(MainActivity.this, ContactActivity.class);
+                else if(position==1)
+                    intent.setClass(MainActivity.this, nameActivity.class);
+                else if(position==2)
+                    intent.setClass(MainActivity.this, passActivity.class);
+                startActivity(intent);
+            }
+        });
+       
+
+4、Intent传递数据
+	0)跳转activity
+	Intent intent = new Intent();
+    intent.setClass(MainActivity.this, LoginActivity.class);
+    startActivity(intent);
+    
+	1)放置数据
+	intent.putExtra("name", "zhangsan");
+    intent.putExtra("age", 20);
+    startActivity(intent);
+    
+    2)获取数据
+    Intent intent = getIntent();//必须get，不可以new
+	intent.getStringExtra("name");
+	intent.getStringExtra("cardid");
+	
+    
+	
+	
+	

@@ -1,0 +1,7 @@
+1、配置环境变量Path
+	给path追加 ..\nox\bin\
+2、断线处理
+	关闭酷狗音乐，关闭kadb.exe
+	启动命令行，输入命令nox_adb connect 127.0.0.1:62001
+3、命令行使用
+	启动命令行，输入nox_adb shell,进入Linux命令状态

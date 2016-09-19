@@ -1,0 +1,320 @@
+﻿链接：http://pan.baidu.com/s/1skNuqrb 密码：mv82
+2016-09-1314
+
+1、加载布局
+	1）给一个activity加载布局
+	setContentView(R.layout.activity_main);
+	2）给一个view加载布局
+	//参数Context
+	LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+	//参数：布局文件， 父控件
+    View view = inflater.inflate(R.layout.dialog, null);
+    
+    
+  
+2、对话框
+	使用AlertDialog.Builder创建对话框
+	1）普通提示对话框
+	AlertDialog dialog1 = new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("putong")			//标题
+                            .setMessage("adsadasd")		//内容
+                            .show();
+    2）单选框                        
+    AlertDialog dialog2 = new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("danxuan")
+                            .setSingleChoiceItems(new String[]{"1", "2", "3"}, 1, new DialogInterface.OnClickListener()
+                            {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which)
+                                {
+                                    Log.v("hehe", String.valueOf(which));
+                                }
+                            })//选项内容，默认选项，监听器
+                            .show();
+    3）多选框                        
+    AlertDialog dialog3 = new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("duoxuan")
+                            .setMultiChoiceItems(new String[]{"1", "2", "3"}, new boolean[]{true, false, false}, new DialogInterface.OnMultiChoiceClickListener()
+                            {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which, boolean isChecked)
+                                {
+                                    Log.v("hehe", String.valueOf(which) +" "+ String.valueOf(isChecked));
+                                }
+                            })						//选项内容，每个选项的默认值，监听器
+                            .setPositiveButton("que", new DialogInterface.OnClickListener()
+                            {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which)
+                                {
+
+                                }
+                            })						//系统自带确定按钮
+                            .setCancelable(false)	//点击其他位置，对话框不会被取消
+                            .show();             	//显示对话框   
+    4）自定义对话框
+    LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+    View view = inflater.inflate(R.layout.dialog, null);	//得到一个自定义view，其布局为R.layout.dialog
+    AlertDialog dialog4 = new AlertDialog.Builder(MainActivity.this)
+                            .setView(view)			//设置自定义控件
+                            .setCancelable(false)
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener()
+                            {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which)
+                                {
+
+                                }
+                            })
+                            .show();
+                                         
+       
+       
+                                         
+3、fragment
+	碎片是为了更充分的利用屏幕的空间
+	碎片的要素：布局，继承Fragment(为了加载布局)，通过manager开启tranaction，开始使用，commit
+	1)myfragment.xml
+	<?xml version="1.0" encoding="utf-8"?>
+	<LinearLayout
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="horizontal"
+	    tools:context="com.example.administrator.myfragment.MainActivity">
+    	<TextView
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:text="hehe"
+	        android:background="#ff0000"
+        />
+	</LinearLayout>
+	2)RightFragment
+	public class RightFragment extends Fragment
+	{
+	    @Nullable
+	    @Override
+	    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	    {
+	    	//加载布局：布局文件，父容器，关联性
+	        View view = inflater.inflate(R.layout.right_fragment, container, false);
+	        return view;
+	    }
+	}
+	3)manager使用get方法获取
+	FragmentManager fragmentManager = getFragmentManager();
+	4）transaction 利用manager开启一个任务
+	FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+	5）使用fragment
+	fragmentTransaction.replace(R.id.main, new OtherFragment());
+	fragmentTransaction.add()
+	6）commit	提交任务
+	fragmentTransaction.commit();
+	
+	
+	
+	
+4、actionbar    
+	3.0以上系统提供，根据不同的主题可以提供不同的样式，在menifest中可以修改图标和标语    
+	<application
+        android:allowBackup="true"
+        android:icon="@drawable/ab"		//图标
+        android:label="wang"			//标语
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.Holo.Light.DarkActionBar">	//样式
+        <!--android:theme="@android:style/Theme.Holo.NoActionBar"  不使用actionbar-->
+        
+      	。。。
+    </application>         
+    
+    1)最普通的actionbar
+    	11）在/res/menu/下建立一个menu.xml
+    	<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+		    <item
+		        android:orderInCategory="100"
+		        android:showAsAction="always|withText"
+		        android:title="haha"/>
+		    <item
+		        android:orderInCategory="100"
+		        android:showAsAction="always"
+		        android:title="haha"/>
+		</menu>
+		12）复写onCreateOptionsMenu方法，加载菜单
+    	@Override
+	    public boolean onCreateOptionsMenu(Menu menu)
+	    {
+	        getMenuInflater().inflate(R.menu.login, menu);
+	        return true;
+	    }
+		13）复写onOptionsItemSelected方法，为菜单增加操作
+	    @Override
+	    public boolean onOptionsItemSelected(MenuItem item)
+	    {
+	        Log.v("hehe","haha");
+	        return super.onOptionsItemSelected(item);
+	    }
+    
+
+        
+    2）下拉样式  
+    	21）准备一个下拉列表适配器  
+        SpinnerAdapter adapter = ArrayAdapter.createFromResource(this, data ，android.R.layout.simple_spinner_dropdown_item);
+        22）设置actionbar的样式为下拉
+        actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        23）设置回调函数
+        actionBar.setListNavigationCallbacks(adapter, new ActionBar.OnNavigationListener()
+        {
+            @Override
+            public boolean onNavigationItemSelected(int itemPosition, long itemId)
+            {
+            	
+                Log.v("hehe","2222");
+                return true;
+            }
+        }); 
+        
+        
+    3）tab样式
+    	31）设置actionbar的样式为tab  
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        32）增加tab标签
+        actionBar.addTab(actionBar.newTab().setText("12").setTabListener(new tabListener()));
+        actionBar.addTab(actionBar.newTab().setText("34").setTabListener(new tabListener()));
+        actionBar.addTab(actionBar.newTab().setText("56").setTabListener(new tabListener()));      
+        33）设置tab监听器
+        class tabListener implements ActionBar.TabListener
+    	{
+	        @Override
+	        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft)
+	        {
+	            Log.v("hehe", String.valueOf(tab.getPosition()));
+	            if(tab.getPosition()==0)
+	            {
+	                FragmentTransaction t = getFragmentManager().beginTransaction();
+	                t.replace(R.id.main, new MyFragment());
+	                t.commit();
+	            }
+	        }
+    	}
+        
+    4）自定义样式
+        actionBar = getActionBar();
+        41）选择actionbar的显示样式
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        42）设置自定义view
+        actionBar.setCustomView(R.layout.actionbar);
+        43）操作自定义view
+        Button btn = (Button)actionBar.getCustomView().findViewById(R.id.btn);
+        btn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Log.v("hehe","1212");
+            }
+        });       
+        
+        
+5、ViewPager
+	1）布局中加入android.support.v4.view.ViewPager
+		<android.support.v4.view.ViewPager
+        android:id="@+id/viewpage"
+        android:layout_below="@+id/tx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+	2）准备页面	
+	    LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+        view[0] = inflater.inflate(R.layout.page1, null);
+        view[1] = inflater.inflate(R.layout.page2, null);
+        view[2] = inflater.inflate(R.layout.page3, null);
+        
+    3）适配器
+    	pager = (ViewPager)findViewById(R.id.viewpage);
+        pager.setAdapter(new PagerAdapter()
+        {
+            @Override
+            public int getCount()
+            {
+                return view.length;	//页面数目
+            }
+            @Override
+            public boolean isViewFromObject(View view, Object object)
+            {
+                return view == object;
+            }
+            @Override
+            public Object instantiateItem(ViewGroup container, int position)
+            {
+                container.addView(view[position]);	//加入页面
+                return view[position];
+            }
+            @Override
+            public void destroyItem(ViewGroup container, int position, Object object)
+            {
+                container.removeView(view[position]);//删除页面
+            }
+        });     
+        
+        
+        
+6、actionbar结合viewpager 
+	//使用FragmentPagerAdapter，直接返回fragment，其余操作由适配器完成
+    class MyPagerAdapter extends FragmentPagerAdapter
+    {
+        public MyPagerAdapter(FragmentManager fm)
+        {
+        super(fm);
+        }
+        @Override
+        public Fragment getItem(int position)
+        {
+            Fragment fragment = null;
+            switch (position)
+            {
+                case 0: fragment=new ContactFragment(); break;  //车票预订
+                case 1: fragment=new AcountFragment(); break;   //订单管理
+                case 2: fragment=new ContactFragment(); break;  //@我的
+                default:break;
+            }
+            return fragment;
+        }
+        @Override
+        public int getCount()
+        {
+            return 3;
+        }
+    }
+    //页面滑动监听器    
+	class pageListener implements ViewPager.OnPageChangeListener
+    {
+        @Override
+        public void onPageSelected(int position)
+        {
+            actionBar.setSelectedNavigationItem(position);	//修改tab的位置
+        }
+     }
+     //tab切换监听器
+     class tabListener implements ActionBar.TabListener
+    {
+        @Override
+        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft)
+        {
+           pager.setCurrentItem(tab.getPosition());
+        }
+    }
+    
+
+
+7、activity回传数据
+	1）启动activity的另外一种方式
+	//将第二个参数叫做requestCode，新activity可以知道自己从哪里启动
+	startActivityForResult(intent,1);
+	2）回传数据
+	//第一个参数是resultCode，旧的activity可以知道数据由何而来
+	新的activity可以调用setResult(1, intent)来返回一个数据
+	一般此方法可以在onResume中调用
+	3）回到旧activity
+	//注意requestCode和resultCode
+	复写onActivityResult(int requestCode, int resultCode, Intent data)

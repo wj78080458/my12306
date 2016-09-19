@@ -6,23 +6,14 @@
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
-                tools:context=".MyFragment" >
+                tools:context=".MyContactActivity" >
+
     <ListView
-        android:id="@+id/lvMyList"
+        android:id="@+id/lvMyContact"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="100dp" >
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
     </ListView>
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="42dp"
-        android:background="#ff00ff"
-        android:text="退出登录"
-        android:textColor="#ffffff" />
 
 </RelativeLayout>

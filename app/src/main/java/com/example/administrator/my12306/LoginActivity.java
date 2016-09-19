@@ -1,16 +1,25 @@
 package com.example.administrator.my12306;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Calendar;
 
 /**
  * Created by Administrator on 2016/9/18 0018.
@@ -28,12 +37,14 @@ public class LoginActivity extends Activity
     private boolean isAutoLogin = true;
     SharedPreferences pref = null;
     SharedPreferences.Editor editor = null; // 编辑器
+    private String line = null;
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
+        Log.v("hehe","login");
         pref = getSharedPreferences("user",
                 Context.MODE_PRIVATE);
         editor = pref.edit();

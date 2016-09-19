@@ -1,0 +1,43 @@
+安装
+配置
+git config --global user.name "Tony"  
+git config --global user.email "tony@gmail.com"
+查看配置
+git config --global user.name 
+git config --global user.email
+
+1、进入到目录
+cd F:/PhoneBook/broadcast/test30
+2、初始化
+git init
+3、增加代码到仓库
+git add  filename  //增加某个文件
+git add  dir		//增加目录
+git add  .			//增加所有的 (当前目录)
+4、提交
+git commit -m "First commit."
+git commit -m "2016.9.19-9:34-weijie"
+5、分枝
+git branch version1.0  //创建一个分枝
+git checkout version1.0 //跳转到分枝version1.0
+git checkout master //跳转到分枝master
+
+6、推送到网络
+git remote add origin https://github.com/wj78080458/my12306.git
+//将master分枝推送到origin
+git push -u origin master
+
+7、获取
+git clone https://github.com/exmaple/test.git
+
+
+cd F:/wj/Android/android-src/android-src/my12306/.git/
+git add .
+git commit -m "2016-9-18"
+git status
+git branch version1.0
+git checkout version1.0
+git branch -a
+git remote add origin https://github.com/wj78080458/my12306.git
+git push -u origin master
+

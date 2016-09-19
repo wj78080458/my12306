@@ -1,0 +1,94 @@
+Animation
+	2D动画，android提供两种2D动画，tween动画和fram动画
+	1、fram动画，在一个imageview中切换图片
+	1）在drawable中准备图片资源b1.jpg、b2.jpg、b3.jpg、b4.jpg、
+	2）在drawable中定义一个fram.xml
+	<?xml version="1.0" encoding="utf-8"?>
+	<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+	 android:oneshot="false"
+	    >
+		 <item android:drawable="@drawable/b6" android:duration="300"/>
+		 <item android:drawable="@drawable/b2" android:duration="300"/>
+		 <item android:drawable="@drawable/b3" android:duration="300"/>
+		 <item android:drawable="@drawable/b4" android:duration="300"/>
+		 <item android:drawable="@drawable/b7" android:duration="300"/>
+	</animation-list>
+	oneshot属性代表是否为一次性动画，duration指明动作的持续时间
+	3）使用imageview控件加载xml资源
+	   imageView = (ImageView)findViewById(R.id.image);
+       imageView.setBackgroundResource(R.drawable.fram);
+    4）从imageview获取资源
+    	AnimationDrawable animationDrawable = (AnimationDrawable)imageView.getBackground();
+	5）启动
+		animationDrawable.start();
+		
+	2、tween动画，一个控件在不停的产生变化。android提供四种tween动画：移动、旋转、透明、缩放
+	1）移动AlphaAnimation
+		AlphaAnimation alphaAnimation = new AlphaAnimation(1f, 0f);//从1到0
+	    alphaAnimation.setDuration(3000);	//持续时间
+        alphaAnimation.setFillAfter(true);	//停留在动画之后
+        alphaAnimation.setRepeatCount(2);	//重复次数
+        alphaAnimation.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+                //开启动画的时候
+            }
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+				//动画结束的时候
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {	
+				//动画重复的时候
+            }
+        });
+        imageView.startAnimation(alphaAnimation);	//开启动画
+    2）移动TranslateAnimation
+        TranslateAnimation animation = new TranslateAnimation(
+                Animation.ABSOLUTE, 0f,		//from_x类型、坐标
+                Animation.ABSOLUTE, 1f,		//to_x类型、坐标
+                Animation.ABSOLUTE, 0f,		//from_y类型、坐标
+                Animation.ABSOLUTE, 1f		//to_x类型、坐标
+        );
+    3)旋转RotateAnimation
+        RotateAnimation animation1 = new RotateAnimation(
+                0,90,		//起始角度，结束角度。12点钟为0度，3点钟为90度
+                RotateAnimation.ABSOLUTE, 0f,
+                RotateAnimation.ABSOLUTE, 0f
+        );
+    4）缩放ScaleAnimation
+        ScaleAnimation animation2 = new ScaleAnimation(
+                0,0,	//from_x ,to_x
+                1f,1f,	//from_y, to_y
+                ScaleAnimation.ABSOLUTE,ScaleAnimation.ABSOLUTE,//from_xType ,to_xType
+                ScaleAnimation.ABSOLUTE,ScaleAnimation.ABSOLUTE,//from_yType, to_yType
+        );
+	
+	3、AnimationSet，将所有动画都加入到一个集合，同时执行
+	    AnimationSet animationSet = new AnimationSet(true);
+        animationSet.addAnimation(alphaAnimation);
+        animationSet.addAnimation(animation1);
+        animationSet.addAnimation(animation2);
+        imageView.startAnimation(animationSet);
+        
+     4、Interpolator速度控制器
+     LinearInterpolator匀速、AccelerateInterpolator加速、DecelerateInterpolator减速
+     animation执行的时候可以对其速度加以控制
+     animationSet.setInterpolator(new LinearInterpolator());
+     
+
+
+DatePickerDialog
+	日期对话框，可以用来选择日期
+	DatePickerDialog dialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener()
+        {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+            {
+
+            }
+        },2016,9,16);	
