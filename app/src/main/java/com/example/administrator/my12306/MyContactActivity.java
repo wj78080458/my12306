@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -113,8 +116,24 @@ public class MyContactActivity extends Activity
         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
         {
             Intent intent = new Intent();
-            intent.setClass(MyContactActivity.this, );
+            Log.v("hehe", String.valueOf(position));
+            intent.setClass(MyContactActivity.this, MyContactEditActivity.class);
             startActivity(intent);
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.my_contact,menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        Log.v("hehe", String.valueOf(item.getItemId()));
+        Intent intent = new Intent();
+        intent.setClass(MyContactActivity.this,MyContactAddActivity.class );
+        startActivity(intent);
+        return true;
     }
 }
