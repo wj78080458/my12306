@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,9 +30,12 @@ import java.util.List;
 public class MyContactAddActivity extends Activity
 {
     private ListView listView = null;
+    private Button btn = null;
     List<HashMap<String, Object>> mapList = new ArrayList<HashMap<String,Object>>();
     HashMap<String,Object> map = null;
     private String[] keyStr = {"姓名","证件类型","证件号码","乘客类型","联系电话"};
+    private String [] info = {"","","","",""};
+    private MyAdapter adapter = null;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -42,9 +47,11 @@ public class MyContactAddActivity extends Activity
     }
     void viewInit()
     {
+        adapter = new MyAdapter(MyContactAddActivity.this, R.layout.item_my_contact_add, info);
         listView = (ListView)findViewById(R.id.lvMyContactAdd);
-        listView.setAdapter(new MyAdapter(MyContactAddActivity.this, R.layout.item_my_contact_add, new String[]{"", "", "", "", ""}));
+        listView.setAdapter(adapter);
         listView.setOnItemClickListener(new MyOnItemClickListener());
+        btn = (Button)findViewById(R.id.btnMyContactAddSave);
     }
     class MyAdapter extends BaseAdapter
     {
@@ -99,30 +106,93 @@ public class MyContactAddActivity extends Activity
             final String[] cardType = new String[]{"身份证", "港澳台通信证", "护照"};
             final String[] nameType = new String[]{"儿童","学生","军人","成人",};
             final AlertDialog.Builder builder =  new AlertDialog.Builder(MyContactAddActivity.this);
+            final View dialogView = LayoutInflater.from(MyContactAddActivity.this).inflate(R.layout.dialog,null);
+            //根据不同的情况弹出不同的对话框
             switch (position)
             {
-                case 0:builder.setTitle("请输入姓名");break;
+                case 0:builder.setTitle("请输入姓名")
+                        .setView(dialogView)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                EditText et = ((EditText) dialogView.findViewById(R.id.et));
+                                info[0] = et.getText().toString();
+                                adapter.notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                            }
+                        });
+                    break;
                 case 1:builder.setTitle("请选择证件类型")
                         .setSingleChoiceItems(cardType, 0, new DialogInterface.OnClickListener()
                         {
                             @Override
                             public void onClick(DialogInterface dialog, int which)
                             {
-                                Log.v("hehe", cardType[which]);
+                                info[1] = cardType[which];
+                                adapter.notifyDataSetChanged();
+                                dialog.dismiss();
+                            }
+                        });
+                        break;
+                case 2:builder.setTitle("请输入证件号码")
+                        .setView(dialogView)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                EditText et = ((EditText) dialogView.findViewById(R.id.et));
+                                info[2] = et.getText().toString();
+                                adapter.notifyDataSetChanged();
                             }
                         })
-                        .setPositiveButton();break;
-                case 2:builder.setTitle("请输入证件号码");break;
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                            }
+                        });
+                    break;
                 case 3:builder.setTitle("请选择乘客类型")
                         .setSingleChoiceItems(nameType, 0, new DialogInterface.OnClickListener()
                         {
                             @Override
                             public void onClick(DialogInterface dialog, int which)
                             {
-                                Log.v("hehe", nameType[which]);
+                                info[3] = nameType[which];
+                                adapter.notifyDataSetChanged();
+                                dialog.dismiss();
                             }
                         });break;
-                case 4:builder.setTitle("请输入电话号码");break;
+                case 4:builder.setTitle("请输入电话号码")
+                        .setView(dialogView)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                EditText et = ((EditText) dialogView.findViewById(R.id.et));
+                                info[4] = et.getText().toString();
+                                adapter.notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                            }
+                        });
+                    break;
                 default:break;
             }
             builder.show();

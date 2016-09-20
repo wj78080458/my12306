@@ -28,7 +28,7 @@ public class MyContactActivity extends Activity
     private ListView listView = null;
     List<HashMap<String, Object>> mapList = new ArrayList<HashMap<String,Object>>();
     HashMap<String,Object> map = null;
-
+    private MyAdapter adapter = null;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -61,8 +61,9 @@ public class MyContactActivity extends Activity
     }
     void viewInit()
     {
+        adapter = new MyAdapter(MyContactActivity.this, R.layout.item_my_contact,mapList);
         listView = (ListView)findViewById(R.id.lvMyContact);
-        listView.setAdapter(new MyAdapter(MyContactActivity.this, R.layout.item_my_contact,mapList));
+        listView.setAdapter(adapter);
         listView.setOnItemClickListener(new MyOnItemClickListener());
     }
     class MyAdapter extends BaseAdapter
@@ -136,4 +137,5 @@ public class MyContactActivity extends Activity
         startActivity(intent);
         return true;
     }
+
 }
