@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
+    useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "com.example.administrator.my12306"
@@ -20,7 +21,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
+    compile files('libs/ZXing-2.2.jar')
+    compile 'com.android.support:support-v4:24.0.0-alpha2'
+    compile 'com.google.code.gson:gson:2.2.4'
 }

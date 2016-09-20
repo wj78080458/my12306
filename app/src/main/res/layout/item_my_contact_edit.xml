@@ -26,6 +26,6 @@
         android:id="@+id/imgMyContactEditFlg"
         android:layout_width="25dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/forward_25" />
+        />
 
 </LinearLayout>

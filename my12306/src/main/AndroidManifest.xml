@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.neuedu.my12306"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="18" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.READ_CONTACTS"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Mainbar" >
+        <activity
+            android:name="com.neuedu.my12306.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="main" >
+                </action>
+                <action android:name="aa" >
+                </action>
+
+                <category android:name="android.intent.category.DEFAULT" >
+                </category>
+                <category android:name="bb" >
+                </category>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.neuedu.my12306.LoginActivity"
+            android:label="@string/title_activity_login" >
+        </activity>
+        <activity
+            android:name="com.neuedu.my12306.my.MyAccountActivity"
+            android:label="@string/title_activity_my_account" >
+        </activity>
+        <activity
+            android:name="com.neuedu.my12306.my.MyContactActivity"
+            android:label="@string/title_activity_my_contact" >
+        </activity>
+        <activity
+            android:name="com.neuedu.my12306.my.MyPasswordActivity"
+            android:label="@string/title_activity_my_password" >
+        </activity>
+        <activity
+            android:name="com.neuedu.my12306.SplashActivity"
+            android:label="@string/title_activity_splash" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.neuedu.my12306.my.MyContactNewActivity"
+            android:label="@string/title_activity_my_contact_new" >
+        </activity>
+        <activity
+            android:name="com.neuedu.my12306.my.MyContactEditActivity"
+            android:label="@string/title_activity_my_contact_edit" >
+        </activity>
+        <activity android:name="com.neuedu.my12306.stationlist.StationListActivity" >
+        </activity>
+        <activity
+            android:name="com.neuedu.my12306.ticket.TicketResultStep1Activity"
+            android:label="@string/title_activity_ticket_result_step1" >
+        </activity>
+        <activity
+            android:name="com.neuedu.my12306.ticket.TicketDetailsStep2Activity"
+            android:label="@string/title_activity_ticket_details_step2" >
+        </activity>
+        <activity
+            android:name="com.neuedu.my12306.ticket.TicketPassengerStep3Activity"
+            android:label="@string/title_activity_ticket_passenger_step3" >
+        </activity>
+        <activity
+            android:name="com.neuedu.my12306.ticket.TicketPassengerListStep3Activity"
+            android:label="@string/title_activity_ticket_passenger_list_step3" >
+        </activity>
+        <activity
+            android:name="com.neuedu.my12306.ticket.TicketOrderSuccessStep4Activity"
+            android:label="@string/title_activity_ticket_order_success_step4" >
+        </activity>
+        <activity
+            android:name="com.neuedu.my12306.ticket.TicketPaySuccessStep5Activity"
+            android:label="@string/title_activity_ticket_pay_success_step5" >
+        </activity>
+        <activity
+            android:name="com.neuedu.my12306.order.OrderPayDoneActivity"
+            android:label="@string/title_activity_order_pay_done" >
+        </activity>
+        <activity
+            android:name="com.neuedu.my12306.order.OrderWaitPayActivity"
+            android:label="@string/title_activity_order_wait_pay" >
+        </activity>
+    </application>
+
+</manifest>

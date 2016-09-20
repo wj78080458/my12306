@@ -52,6 +52,15 @@ public class MyContactAddActivity extends Activity
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new MyOnItemClickListener());
         btn = (Button)findViewById(R.id.btnMyContactAddSave);
+        btn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //checkinfo，检查数据的合法性
+                finish();
+            }
+        });
     }
     class MyAdapter extends BaseAdapter
     {
@@ -172,7 +181,8 @@ public class MyContactAddActivity extends Activity
                                 adapter.notifyDataSetChanged();
                                 dialog.dismiss();
                             }
-                        });break;
+                        });
+                    break;
                 case 4:builder.setTitle("请输入电话号码")
                         .setView(dialogView)
                         .setPositiveButton("确定", new DialogInterface.OnClickListener()
@@ -197,5 +207,14 @@ public class MyContactAddActivity extends Activity
             }
             builder.show();
         }
+    }
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        Intent intent = new Intent();
+        //将info返回到MyContactActivity
+        intent.putExtra("info", info);
+        setResult(100, intent);
     }
 }

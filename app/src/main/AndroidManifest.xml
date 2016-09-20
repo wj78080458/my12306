@@ -44,6 +44,40 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name="StationListActivity" >
+        </activity>
+            <activity
+                android:name=".TicketResultStep1Activity"
+                android:label="@string/title_activity_ticket_result_step1" >
+            </activity>
+            <activity
+                android:name=".TicketDetailsStep2Activity"
+                android:label="@string/title_activity_ticket_details_step2" >
+            </activity>
+            <activity
+                android:name=".TicketPassengerStep3Activity"
+                android:label="@string/title_activity_ticket_passenger_step3" >
+            </activity>
+            <activity
+                android:name=".TicketPassengerListStep3Activity"
+                android:label="@string/title_activity_ticket_passenger_list_step3" >
+            </activity>
+        <activity
+            android:name=".TicketOrderSuccessStep4Activity"
+            android:label="@string/title_activity_ticket_order_success_step4" >
+        </activity>
+        <activity
+            android:name=".TicketPaySuccessStep5Activity"
+            android:label="@string/title_activity_ticket_pay_success_step5" >
+        </activity>
+        <activity
+            android:name=".OrderPayDoneActivity"
+            android:label="@string/title_activity_order_pay_done" >
+        </activity>
+        <activity
+            android:name=".OrderWaitPayActivity"
+            android:label="@string/title_activity_order_wait_pay" >
+        </activity>
     </application>
 
 </manifest>

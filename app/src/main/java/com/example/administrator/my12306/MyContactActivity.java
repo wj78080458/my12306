@@ -29,6 +29,7 @@ public class MyContactActivity extends Activity
     List<HashMap<String, Object>> mapList = new ArrayList<HashMap<String,Object>>();
     HashMap<String,Object> map = null;
     private MyAdapter adapter = null;
+    private int pos=0;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -116,16 +117,24 @@ public class MyContactActivity extends Activity
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
         {
+            pos = position;
             Intent intent = new Intent();
             Log.v("hehe", String.valueOf(position));
+            //跳转到MyContactEditActivity
             intent.setClass(MyContactActivity.this, MyContactEditActivity.class);
-            startActivity(intent);
+            //传递数据
+            intent.putExtra("name", mapList.get(position).get("name").toString());
+            intent.putExtra("cardType",mapList.get(position).get("cardType").toString() );
+            intent.putExtra("cardID", mapList.get(position).get("cardID").toString());
+            intent.putExtra("nameType",mapList.get(position).get("nameType").toString() );
+            intent.putExtra("telNum",mapList.get(position).get("telNum").toString() );
+            startActivityForResult(intent,2);
         }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.my_contact,menu);
+        getMenuInflater().inflate(R.menu.my_contact, menu);
         return true;
     }
     @Override
@@ -134,8 +143,48 @@ public class MyContactActivity extends Activity
         Log.v("hehe", String.valueOf(item.getItemId()));
         Intent intent = new Intent();
         intent.setClass(MyContactActivity.this,MyContactAddActivity.class );
-        startActivity(intent);
+        //等待新的activity返回结果
+        startActivityForResult(intent, 1);
         return true;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        //接收MyContactAddActivity数据
+        if(requestCode==1&&resultCode==100)
+        {
+            String[] info = data.getStringArrayExtra("info");
+            map = new HashMap<String, Object>();
+            map.put("name",info[0]);
+            map.put("cardType",info[1]);
+            map.put("cardID",info[2]);
+            map.put("nameType",info[3]);
+            map.put("telNum",info[4]);
+            mapList.add(map);
+            //通知适配器修改数据
+            adapter.notifyDataSetChanged();
+        }
+        if(requestCode==2&&resultCode==200)
+        {
+            String[] info = data.getStringArrayExtra("info");
+            map = new HashMap<String, Object>();
+            map.put("name",info[0]);
+            map.put("cardType",info[1]);
+            map.put("cardID",info[2]);
+            map.put("nameType",info[3]);
+            map.put("telNum",info[4]);
+            //修改数据,位置是item被点击的位置，可以从itemClickListner获取位置
+            mapList.set(pos ,map);
+            //通知适配器修改数据
+            adapter.notifyDataSetChanged();
+        }
+        if(requestCode==2&&resultCode==250)
+        {
+            //输出数据
+            mapList.remove(pos);
+            adapter.notifyDataSetChanged();
+        }
+    }
 }
